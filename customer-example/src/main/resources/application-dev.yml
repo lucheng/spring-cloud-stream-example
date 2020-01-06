@@ -1,0 +1,28 @@
+server:
+  port: 8044
+
+spring:
+  profiles: dev
+  rabbitmq: 
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    
+  cloud:
+     stream: 
+        bindings:
+           input:
+              destination: test-topic
+              content-type: text/plain
+              group: test-group1
+           input1:
+              destination: test-topic
+              content-type: text/plain
+              group: test-group1
+        rocketmq:
+           bindings:
+              output:
+                 producer:
+                    group: demo-group
+
