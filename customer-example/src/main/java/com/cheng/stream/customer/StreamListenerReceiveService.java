@@ -1,19 +1,30 @@
 package com.cheng.stream.customer;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.stereotype.Service;
+import org.springframework.messaging.Message;
 
-@Service
+@Slf4j
+@EnableBinding(MqMessageSource.class)
 public class StreamListenerReceiveService {
 
-    @StreamListener(Sink.INPUT) // 4
-    public void receiveByStreamListener1(String receiveMsg) {
-        System.out.println("receiveByStreamListener1: " + receiveMsg);
-    }
+	/**
+	 * 消费ECM的货柜模板变更
+	 *
+	 * @param message
+	 */
+	@StreamListener(MqMessageSource.ECM_SHOP_TEMPLATE_INPUT)
+	public void receive(String message) {
+		log.info("接收1111111111111111参数={}", message);
+	}
 
-    @StreamListener(Sink1.INPUT) // 4
-    public void receiveByStreamListener2(String receiveMsg) {
-        System.out.println("receiveByStreamListener2: " + receiveMsg);
-    }
+	/**
+	 * 消费ECM的货柜模板变更
+	 *
+	 * @param message
+	 *//*
+		 * @StreamListener(MqMessageSource.ECM_SHOP_TEMPLATE_INPUT) public void
+		 * receive2(String message) { log.info("接收222222222222222参数={}", message); }
+		 */
 }

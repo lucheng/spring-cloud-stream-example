@@ -3,21 +3,26 @@ server:
 
 spring:
   profiles: dev
-  rabbitmq: 
-    host: localhost
-    port: 5672
+  rabbitmq:
+    addresses: amqp://localhost:5672
     username: guest
     password: guest
-    
   cloud:
-     stream: 
+     stream:
+        binders:
+           crm:
+               type: rabbit
+               environment:
+                  spring:
+                     rabbitmq:
+                         username: ${spring.rabbitmq.username}
+                         password: ${spring.rabbitmq.password}
+                         addresses: ${spring.rabbitmq.addresses}
+                         virtual-host: /crm
         bindings:
-           output:
-              destination: test-topic
-              content-type: text/plain
-        rocketmq:
-           bindings:
-              output:
-                 producer:
-                    group: demo-group
-
+           message_output:           #BOSS基础信息生产者
+               destination: crm_exchange
+               group:   crm_group     #默认情况下同一个队列的只能被同一个group的消费者消费
+               contentType: text/plain
+               producer:
+                   exchangeType: direct  #指定该主题的类型为广播模式
