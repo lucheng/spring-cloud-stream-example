@@ -20,9 +20,10 @@ spring:
                          addresses: ${spring.rabbitmq.addresses}
                          virtual-host: /crm
         bindings:
-           message_output:           #BOSS基础信息生产者
+           message_output:               #crm生产者
                destination: crm_exchange
-               group:   crm_group     #默认情况下同一个队列的只能被同一个group的消费者消费
+               group:   crm_group        #默认情况下同一个队列的只能被同一个group的消费者消费
                contentType: text/plain
                producer:
-                   exchangeType: direct  #指定该主题的类型为广播模式
+                   exchangeType: fanout  #主题类型：1.fanout广播模式 2.direct 完全根据key投递 3.topic 根据key进行模糊匹配后投递，可以使用符合#匹配一个或者多个词，*只能匹配一个次
+                   exchangeDurable: true #交换机持久化  默认为true

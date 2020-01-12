@@ -1,23 +1,22 @@
 package com.cheng.stream.producer;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cheng.stream.utils.DateUtil;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * fastjson
+ */
 @Configuration
 public class JavaConfig {
 
@@ -39,8 +38,6 @@ public class JavaConfig {
 			return source;
 		});
 
-//		fastJsonConfig.getSerializeConfig().put(LocalDateTime.class, new SimpleDateFormatSerializer("yyyy-MM-dd HH:mm:ss"));
-		
 		// 3、中文乱码解决方案,此处可添加能够解析的多种类型
 		List<MediaType> fastMediaTypes = new ArrayList<>();
 		fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
