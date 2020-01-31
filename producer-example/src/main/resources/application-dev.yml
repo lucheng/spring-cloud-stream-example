@@ -18,7 +18,7 @@ spring:
                          username: ${spring.rabbitmq.username}
                          password: ${spring.rabbitmq.password}
                          addresses: ${spring.rabbitmq.addresses}
-                         virtual-host: /crm
+                         virtual-host: /
         bindings:
            message_output:               #crm生产者
                destination: crm_exchange
