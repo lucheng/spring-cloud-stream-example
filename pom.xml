@@ -49,6 +49,7 @@
 		<module>customer-example</module>
 		<module>producer-example</module>
 		<module>customer2-example</module>
+		<module>producer2-example</module>
 	</modules>
 
 	<dependencies>

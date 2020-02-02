@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: producer-example
+  profiles:
+    active: dev
+#  jackson:
+#      date-format: yyyy-MM-dd HH:mm:ss
+#      locale: zh_CN
+#      time-zone: GMT+8
+#      deserialization:
+#          fail-on-unknown-properties: false
+#      serialization:
+#          WRITE_DATES_AS_TIMESTAMPS: false
+#  mvc:
+#      date-format: yyyy-MM-dd HH:mm:ss
+server:
+  port: 8044
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+  metrics:
+    web:
+      server:
+        auto-time-requests: true

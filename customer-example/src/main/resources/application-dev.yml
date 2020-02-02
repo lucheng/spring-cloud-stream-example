@@ -25,7 +25,12 @@ spring:
                group:  crm_group_qa  #默认情况下同一个队列的只能被同一个group的消费者消费
                contentType: text/json
                consumer:
-                   exchangeType: fanout  #主题类型：1.fanout广播模式 2.direct 完全根据key投递 3.topic 根据key进行模糊匹配后投递，可以使用符合#匹配一个或者多个词，*只能匹配一个次
+                   exchangeType: topic  #主题类型：1.fanout广播模式 2.direct 完全根据key投递 3.topic 根据key进行模糊匹配后投递，可以使用符合#匹配一个或者多个词，*只能匹配一个次
                    autoBindDlq: true #设置为true - 绑定器将创建一个DLQ; 您可以选择在deadLetterQueueName中指定一个名称
                    republishToDlq: true
 
+        rabbit:
+            bindings:
+              ecm_shop_template:
+                consumer:
+                  bindingRoutingKey: aaaa       # 用来绑定消费者的 routing key
