@@ -20,7 +20,7 @@ public class OrderMqService {
 	
 	@RabbitListener(bindings = 
 			@QueueBinding(value = @Queue(name = "crm_exchange.crm_group_dev2"), 
-			exchange = @Exchange(name = "crm_exchange", type = ExchangeTypes.TOPIC), key = "bbbb"))
+			exchange = @Exchange(name = "universe.distribution.test", type = ExchangeTypes.TOPIC), key = "bbbb"))
 	@RabbitHandler
 	public void receive(String message) {
 		log.info(profiles + "接收33333333参数={}", message);

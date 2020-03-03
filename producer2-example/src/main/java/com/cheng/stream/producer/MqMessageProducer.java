@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class MqMessageProducer implements CommandLineRunner {
 
-	private String routingKey = "test333";
+	private String routingKey = "bbbb";
 	
     @Autowired
     private RabbitTemplate rabbitTemplate;

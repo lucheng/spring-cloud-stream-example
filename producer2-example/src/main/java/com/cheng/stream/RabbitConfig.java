@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    public final static String CRM_EXCHANGE = "crm_exchange";
+    public final static String CRM_EXCHANGE = "universe.distribution.test";
 
     @Bean
     public TopicExchange exchange(){
