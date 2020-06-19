@@ -3,7 +3,7 @@ server:
 spring:
   profiles: dev
   rabbitmq:
-    addresses: amqp://localhost:5672
+    addresses: amqp://localhost:5673
     username: guest
     password: guest
   cloud:
@@ -21,14 +21,21 @@ spring:
       bindings:
         message_output:
           destination: crm_exchange
-          group: crm_group
           contentType: text/plain
           producer:
 #            exchangeType: topic
             exchangeDurable: true
+        delayedQueueOutput:
+          destination: delayedQueueTopic
+          content-type: application/json
       rabbit:
         bindings:
           message_output:
             producer:
               exchangeType: topic
               routing-key-expression: '''test444'''
+          delayedQueueOutput:
+            producer:
+              exchangeType: topic
+              delayedExchange: true # 是否将目标exchange声明为一个延迟消息交换机，默认false。即消息productor发布消息到延迟exchange后，延迟n长时间后才将消息推送到指定的queue中。 -RabbitMQ需要安装/启用插件: rabbitmq-delayed-message-exchange
+          

@@ -18,10 +18,8 @@ public class MqMessageProducer implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 //			Thread.sleep(5000);
-		int count = 500;
+		int count = 50000000;
 		for (int index = 1; index <= count; index++) {
-			Thread.sleep(500);
-			log.info("msg-" + index);
 			channel.send(MessageBuilder.withPayload("msg111-" + index).build()); // 3
 		}
 	}

@@ -3,9 +3,10 @@ server:
 spring:
   profiles: dev
   rabbitmq: 
-    addresses: amqp://localhost:5672
+    addresses: amqp://localhost:5673
     username: guest
     password: guest
+    virtual-host: /
   cloud:
      stream:
         binders:
@@ -17,20 +18,31 @@ spring:
                          username: ${spring.rabbitmq.username}
                          password: ${spring.rabbitmq.password}
                          addresses: ${spring.rabbitmq.addresses}
-                         virtual-host: /
+                         virtual-host: ${spring.rabbitmq.virtual-host}
         bindings:
            ecm_shop_template:           #交易系统ECM的货柜模板变更消费者
                binder: crm
                destination: crm_exchange
-               group:  crm_group_qa  #默认情况下同一个队列的只能被同一个group的消费者消费
+               group:  goods  #默认情况下同一个队列的只能被同一个group的消费者消费
                contentType: text/json
                consumer:
                    exchangeType: topic  #主题类型：1.fanout广播模式 2.direct 完全根据key投递 3.topic 根据key进行模糊匹配后投递，可以使用符合#匹配一个或者多个词，*只能匹配一个次
                    autoBindDlq: true #设置为true - 绑定器将创建一个DLQ; 您可以选择在deadLetterQueueName中指定一个名称
                    republishToDlq: true
-
+                   concurrency: 5 #启用多个消费者
+                   maxConcurrency: 10 #最大消费者
+                   prefetch: 10 #批量获取消息
+           delayedQueueInput:
+              binder: crm
+              destination: delayedQueueTopic
+              content-type: application/json
+              group: delayedQueue
         rabbit:
             bindings:
               ecm_shop_template:
                 consumer:
-                  bindingRoutingKey: aaaa       # 用来绑定消费者的 routing key
+                  bindingRoutingKey: test444       # 用来绑定消费者的 routing key
+              delayedQueueInput:
+                consumer:
+                  delayedExchange: true # 是否将目标exchange声明为一个延迟消息交换机，默认false。即消息productor发布消息到延迟exchange后，延迟n长时间后才将消息推送到指定的queue中。 -RabbitMQ需要安装/启用插件: rabbitmq-delayed-message-exchange
+              
